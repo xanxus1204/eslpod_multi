@@ -438,6 +438,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = eslpod_multi_/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "kurumecs.eslpod-multi-";
@@ -449,6 +450,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = eslpod_multi_/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "kurumecs.eslpod-multi-";
@@ -523,6 +525,7 @@
 				43BF7A241BC36E0600494119 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		43BF7A251BC36E0600494119 /* Build configuration list for PBXNativeTarget "eslpod_multi_Tests" */ = {
 			isa = XCConfigurationList;
@@ -531,6 +534,7 @@
 				43BF7A271BC36E0600494119 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		43BF7A281BC36E0600494119 /* Build configuration list for PBXNativeTarget "eslpod_multi_UITests" */ = {
 			isa = XCConfigurationList;
@@ -539,6 +543,7 @@
 				43BF7A2A1BC36E0600494119 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
