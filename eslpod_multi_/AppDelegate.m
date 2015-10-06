@@ -1,9 +1,9 @@
 //
 //  AppDelegate.m
-//  eslpod_multi_
+//  英語学習
 //
-//  Created by 椛島優 on 2015/10/06.
-//  Copyright © 2015年 椛島優. All rights reserved.
+//  Created by 金子誠也 on 2015/03/04.
+//  Copyright (c) 2015年 金子誠也. All rights reserved.
 //
 
 #import "AppDelegate.h"
@@ -39,6 +39,7 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+    
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
