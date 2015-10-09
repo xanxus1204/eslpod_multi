@@ -12,14 +12,10 @@
 @interface MultipeerHost : NSObject<MCSessionDelegate,MCNearbyServiceAdvertiserDelegate,MCNearbyServiceBrowserDelegate>
 @property MCPeerID *mPeerID;
 @property MCSession *mSession;
-//@property MCPeerID *mPeerID2;
-//@property MCSession *mSession2;
 @property MCNearbyServiceAdvertiser *nearbyAd;
 @property NSMutableArray *connectedpeer;
-//@property NSMutableArray *connectedpeer2;
 @property NSArray *invitationArr;
 @property BOOL leadership;
-//@property BOOL boss;
 @property MCNearbyServiceBrowser *browser;
 @property NSString *recvStr;
 @property int nowinvitees;

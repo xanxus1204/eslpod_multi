@@ -46,7 +46,7 @@ int leadercount;
     
     [self.browser startBrowsingForPeers];
     
-    //self.boss=YES;
+   
     
 
 }
@@ -75,12 +75,6 @@ int leadercount;
             
             self.nowinvitees--;
             
-            
-//            if (self.connectedpeer.count==7 && self.boss) {//７人であって私がボスなら
-//                [self sendStr:@"leadus"];
-//                self.boss =NO;
-//                [self stopHost];
-//            }
         }
     }
     if (state==MCSessionStateNotConnected) {
@@ -101,26 +95,7 @@ int leadercount;
     NSString*str=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
     self.recvStr=str;
     self.recvData=data;
-    //NSLog(@"%@",str);
-//    if ([str isEqualToString:@"leadus"]) {//指令がきた場合
-//        self.connectedpeer2=[[NSMutableArray alloc]init];
-//        self.mPeerID2 = [[MCPeerID alloc] initWithDisplayName:[[UIDevice currentDevice]name]];
-//        //セッションを初期化
-//        self.mSession2= [[MCSession alloc] initWithPeer:self.mPeerID2];
-//        //デリゲートを設定
-//        self.mSession2.delegate = self;
-//        self.browser = [[MCNearbyServiceBrowser alloc]
-//                        initWithPeer:self.mPeerID2
-//                        serviceType:@"kurumecs"];
-//        
-//        
-//        self.browser.delegate = self;
-//    
-//    
-//    [self.browser startBrowsingForPeers];
-//        
-//        
-//    }
+
      [self postNotification];
     
    
