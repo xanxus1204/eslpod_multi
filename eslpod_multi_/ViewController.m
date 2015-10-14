@@ -69,27 +69,6 @@ int second,minute,maxsecond,maxminute,playback;
     mypod.avPlayer.volume=ipodVol;
     [self startTimer];
 
-//
-//
-//    
-//    
-//    
-//    
-//    mypod.nameData=[ud objectForKey:@"nameData"];
-//    _mediaitemData=[ud objectForKey:@"_mediaitemData"];
-//    songCount=[ud floatForKey:@"songCount"];
-//    if (_mediaitemData!=NULL) {
-//        _mediaItemCollection2 = [NSKeyedUnarchiver unarchiveObjectWithData:_mediaitemData];
-//        MPMediaItem *item = [_mediaItemCollection2.items objectAtIndex:songCount];
-//        [self songtext:item];
-//        _url = [item valueForProperty:MPMediaItemPropertyAssetURL];
-//        _playerItem = [[AVPlayerItem alloc] initWithURL:_url];
-//        mypod.avPlayer = [[AVQueuePlayer alloc] initWithPlayerItem:_playerItem];
-//        
-//        mypod.avPlayer.volume=ipodVol;
-//        [self startTimer];
- //   }
-    // /////// /////////
 
 }
 
