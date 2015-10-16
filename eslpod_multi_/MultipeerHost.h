@@ -19,8 +19,11 @@
 @property MCNearbyServiceBrowser *browser;
 @property NSString *recvStr;
 @property int nowinvitees;
-@property NSData *recvData;
+@property NSMutableData *recvData;
 @property BOOL solo;
+@property int count;
+
+@property NSString * musicPath;
 -(void)startHost;
 -(void)startClient;
 -(void)stopHost;
@@ -29,5 +32,6 @@
 -(void)sendList:(NSArray *)arr;
 -(void)postNotification;
 -(void)postNotificationc;
+-(BOOL)fileCreate:(NSString *)path andData:(NSData*)data;
 
 @end

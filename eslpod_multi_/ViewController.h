@@ -6,6 +6,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "ESLpod.h"
 #import "MultipeerHost.h"
+#import "myaudioqueue.h"
 @interface ViewController : UIViewController<MPMediaPickerControllerDelegate,UITableViewDelegate,UITableViewDataSource>
 {
      IBOutlet UITableView *ttableView;
@@ -48,7 +49,8 @@
 @property (weak, nonatomic) IBOutlet UISlider *ipodvol;
 @property (weak, nonatomic) IBOutlet UISlider *feedvol;
 
-
+@property myaudioqueue *queue;
+@property MPMusicPlayerController*playcontroller;
 
 - (IBAction)ipodSliderChanged:(UISlider*)sender;
 - (IBAction)feedSliderChanged:(UISlider*)sender;

@@ -92,15 +92,43 @@ int leadercount;
 
 // Received data from remote peer
 -(void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID{
-    NSString*str=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-    self.recvStr=str;
-    self.recvData=data;
-
-     [self postNotification];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     
+    NSFileHandle *fileHandle ;
+    if (self.count==0) {
+        
+        self.count++;
+       
+        // ディレクトリを作成
+        [fileManager createDirectoryAtPath:docDir
+               withIntermediateDirectories:YES
+                                attributes:nil
+                                     error:nil];
+        docDir=[docDir stringByAppendingString:@"aaa.aif"];
+       
+        [self fileCreate:docDir andData:data];
+        fileHandle = [NSFileHandle fileHandleForWritingAtPath:docDir];
+        NSURL *url=[[NSURL alloc]initWithString:docDir];
+        AVAudioPlayer *player=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
+        [player play];
+        
+        // ファイルハンドルを作成する
+        
+    }
+        else{
+        [fileHandle writeData:data];
+        
+        // 効率化のためにすぐにファイルに書き込まれずキャッシュされることがある．
+        // 「synchronizeFile」メソッドを使用することで
+        // キャッシュされた情報を即座に書き込むことが可能．
+        [fileHandle synchronizeFile];
+        
+        // ファイルを閉じる
+        [fileHandle closeFile];
+        }
    
 }
-
 
 
 
@@ -253,6 +281,14 @@ int leadercount;
 
 - (void)session:(MCSession *)session didFinishReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID atURL:(NSURL *)localURL withError:(NSError *)error{
     
+}
+-(BOOL)fileCreate:(NSString *)path andData:(NSData *)data{
+    NSFileManager *fm=[NSFileManager defaultManager];
+    BOOL flag=[fm createFileAtPath:path contents:data attributes:nil];
+    
+    NSData*lastdata=[fm contentsAtPath:path];
+    NSLog(@"ファイルおわり%ld",(unsigned long)lastdata.length);
+    return flag;
 }
 
 @end

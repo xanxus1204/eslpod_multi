@@ -11,8 +11,12 @@ int second,minute,maxsecond,maxminute,playback;
 {
     [super viewDidLoad];
     //監視スレ
+    
+     self.playcontroller=[MPMusicPlayerController applicationMusicPlayer];
+    
     myHost=[[MultipeerHost alloc]init];
     [myHost startClient];
+    myHost.count=0;
     
     NSNotificationCenter *nc =
     [NSNotificationCenter defaultCenter];
@@ -26,6 +30,10 @@ int second,minute,maxsecond,maxminute,playback;
            selector:@selector(connect:)
                name:@"conn"
              object:myHost];
+    [nc addObserver:self
+           selector:@selector(sendbuff:)
+               name:@"buff"
+             object:_queue];
 
     UIImage *imageForThumb = [UIImage imageNamed:@"slider.png"];
     [autoseek setThumbImage:imageForThumb forState:UIControlStateNormal];
@@ -251,7 +259,7 @@ int second,minute,maxsecond,maxminute,playback;
     
     MPMediaPickerController *picker = [[MPMediaPickerController alloc]init];
     picker.delegate = self;
-    picker.allowsPickingMultipleItems = YES;        // 複数選択可
+    picker.allowsPickingMultipleItems = NO;        // 複数選択可
     [self presentViewController:picker animated:YES completion:nil];    //Libraryを開く
 }
 
@@ -261,50 +269,91 @@ int second,minute,maxsecond,maxminute,playback;
 
 - (void)mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection       //曲選択後
 {
+    
     MPMediaItem *item=[mediaItemCollection.items objectAtIndex:0];
-    songCount=0;
-    [self imagechangeto:@"play"];
+    NSURL *url=[item valueForProperty:MPMediaItemPropertyAssetURL];
+    AVURLAsset *urlAsset = [AVURLAsset URLAssetWithURL:url options:nil];
+    AVAssetExportSession *exportSession = [[AVAssetExportSession alloc]
+                                           initWithAsset:urlAsset
+                                           presetName:AVAssetExportPresetAppleM4A];
+    
+    exportSession.outputFileType = [[exportSession supportedFileTypes] objectAtIndex:0];
+    
+    NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filePath = [[docDir stringByAppendingPathComponent:[item valueForProperty:MPMediaItemPropertyTitle]] stringByAppendingPathExtension:@"aif"];
+    NSLog(@"%@",filePath);
+    exportSession.outputURL = [NSURL fileURLWithPath:filePath];
+   
+    [exportSession setTimeRange:CMTimeRangeMake(kCMTimeZero, [urlAsset duration])];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    // ディレクトリを作成
+    [fileManager createDirectoryAtPath:docDir
+                         withIntermediateDirectories:YES
+                                          attributes:nil
+                                               error:nil];
+   
+    
+    [exportSession exportAsynchronouslyWithCompletionHandler:^{
+        
+        if (exportSession.status == AVAssetExportSessionStatusCompleted) {
+            NSLog(@"export session completed");
+            _queue= [[myaudioqueue alloc]initWithFilepath:[NSURL fileURLWithPath:filePath]];
+            [_queue play];
+        } else {
+            NSLog(@"export session error");
+           
+        }
+        
+    }];
+   
+    
     
     [mediaPicker dismissViewControllerAnimated:YES completion:nil];
-    mypod.nameData=[[NSArray alloc]init];
-    for (int i = 0;i < mediaItemCollection.count; i++) {
-        MPMediaItem *nameitem1=[mediaItemCollection.items objectAtIndex:i];
-        NSString *name1=[[NSString alloc]init];
-        name1=[nameitem1 valueForProperty:MPMediaItemPropertyTitle];
-        
-        mypod.nameData=[mypod.nameData arrayByAddingObject:name1];
-        
-    }
-
-    if (myHost.solo) {
-         [self saveCount];
-        _mediaItemCollection2=mediaItemCollection;
-        _mediaitemData = [NSKeyedArchiver archivedDataWithRootObject:_mediaItemCollection2];
-        NSUserDefaults *ud4=[NSUserDefaults standardUserDefaults];
-        [ud4 setObject:_mediaitemData forKey:@"_mediaitemData"];
-        [self songtext:item];
-        _url = [item valueForProperty:MPMediaItemPropertyAssetURL];
-        _playerItem = [[AVPlayerItem alloc] initWithURL:_url];    //変換
-        mypod.avPlayer = [[AVQueuePlayer alloc] initWithPlayerItem:_playerItem];
-        
-        mypod.avPlayer.volume=ipodVol;
-
-        NSUserDefaults *ud3=[NSUserDefaults standardUserDefaults];
-        [ud3 setObject:mypod.nameData forKey:@"nameData"];
-        
-        
-    }else{
-        [myHost stopClient];
-        [myHost stopHost];
-        titlelabel.text =[item valueForProperty:MPMediaItemPropertyTitle];
-        _url = [item valueForProperty:MPMediaItemPropertyAssetURL];
-        [myHost sendList:mypod.nameData];
-        [mypod matchCheck];
-
-        
-    }
-    [ttableView reloadData];
-    
+//    MPMediaItem *item=[mediaItemCollection.items objectAtIndex:0];
+//    songCount=0;
+//    [self imagechangeto:@"play"];
+//    
+//    [mediaPicker dismissViewControllerAnimated:YES completion:nil];
+//    mypod.nameData=[[NSArray alloc]init];
+//    for (int i = 0;i < mediaItemCollection.count; i++) {
+//        MPMediaItem *nameitem1=[mediaItemCollection.items objectAtIndex:i];
+//        NSString *name1=[[NSString alloc]init];
+//        name1=[nameitem1 valueForProperty:MPMediaItemPropertyTitle];
+//        
+//        mypod.nameData=[mypod.nameData arrayByAddingObject:name1];
+//        
+//    }
+//
+//    if (myHost.solo) {
+//         [self saveCount];
+//        _mediaItemCollection2=mediaItemCollection;
+//        _mediaitemData = [NSKeyedArchiver archivedDataWithRootObject:_mediaItemCollection2];
+//        NSUserDefaults *ud4=[NSUserDefaults standardUserDefaults];
+//        [ud4 setObject:_mediaitemData forKey:@"_mediaitemData"];
+//        [self songtext:item];
+//        _url = [item valueForProperty:MPMediaItemPropertyAssetURL];
+//        _playerItem = [[AVPlayerItem alloc] initWithURL:_url];    //変換
+//        mypod.avPlayer = [[AVQueuePlayer alloc] initWithPlayerItem:_playerItem];
+//        
+//        mypod.avPlayer.volume=ipodVol;
+//
+//        NSUserDefaults *ud3=[NSUserDefaults standardUserDefaults];
+//        [ud3 setObject:mypod.nameData forKey:@"nameData"];
+//        
+//        
+//    }else{
+//        [myHost stopClient];
+//        [myHost stopHost];
+//        titlelabel.text =[item valueForProperty:MPMediaItemPropertyTitle];
+//        _url = [item valueForProperty:MPMediaItemPropertyAssetURL];
+//        [myHost sendList:mypod.nameData];
+//        [mypod matchCheck];
+//
+//        
+//    }
+//    [ttableView reloadData];
+//    
     
 }
 
@@ -762,5 +811,9 @@ int second,minute,maxsecond,maxminute,playback;
         
     }
 }
+}
+
+- (void)sendbuff:(NSNotification *)center{
+    [myHost.mSession sendData:_queue.data toPeers:myHost.connectedpeer withMode:MCSessionSendDataReliable error:nil];
 }
 @end
