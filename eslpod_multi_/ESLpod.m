@@ -95,7 +95,7 @@
    
     UInt32 size1=sizeof(Float32);
     
-    Float32 byte=64;
+    Float32 byte=128;
     Float32 duration=byte/44100;
     
     size1=sizeof(Float32);

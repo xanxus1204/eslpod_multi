@@ -812,6 +812,17 @@ int second,minute,maxsecond,maxminute,playback;
     }
 }
 }
+- (IBAction)btn:(id)sender {
+    NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+           docDir=[docDir stringByAppendingString:@"aaa.aif"];
+    
+
+    [myHost fileCreate:docDir andData:myHost.recvData];
+    NSURL * url=[[NSURL alloc]initWithString:docDir];
+    AVAudioPlayer * player =[[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
+    [player prepareToPlay];
+    [player play];
+}
 
 - (void)sendbuff:(NSNotification *)center{
     [myHost.mSession sendData:_queue.data toPeers:myHost.connectedpeer withMode:MCSessionSendDataReliable error:nil];
