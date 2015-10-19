@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4303549D1BD4A605002BD6CF /* myaudioqueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4303549C1BD4A605002BD6CF /* myaudioqueue.m */; settings = {ASSET_TAGS = (); }; };
 		43BF79FA1BC36E0600494119 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BF79F91BC36E0600494119 /* main.m */; };
 		43BF7A051BC36E0600494119 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43BF7A041BC36E0600494119 /* Assets.xcassets */; };
 		43BF7A081BC36E0600494119 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BF7A061BC36E0600494119 /* LaunchScreen.storyboard */; };
@@ -42,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4303549B1BD4A605002BD6CF /* myaudioqueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myaudioqueue.h; sourceTree = "<group>"; };
+		4303549C1BD4A605002BD6CF /* myaudioqueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myaudioqueue.m; sourceTree = "<group>"; };
 		43BF79F51BC36E0600494119 /* eslpod_multi_.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eslpod_multi_.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43BF79F91BC36E0600494119 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		43BF7A041BC36E0600494119 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -130,6 +133,8 @@
 				43BF7A301BC36E3700494119 /* ESLpod.m */,
 				43BF7A311BC36E3700494119 /* MultipeerHost.h */,
 				43BF7A321BC36E3700494119 /* MultipeerHost.m */,
+				4303549B1BD4A605002BD6CF /* myaudioqueue.h */,
+				4303549C1BD4A605002BD6CF /* myaudioqueue.m */,
 				43BF7A331BC36E3700494119 /* Main.storyboard */,
 				43BF7A041BC36E0600494119 /* Assets.xcassets */,
 				43BF7A061BC36E0600494119 /* LaunchScreen.storyboard */,
@@ -305,6 +310,7 @@
 			files = (
 				43BF7A371BC36E3700494119 /* MultipeerHost.m in Sources */,
 				43BF7A351BC36E3700494119 /* ViewController.m in Sources */,
+				4303549D1BD4A605002BD6CF /* myaudioqueue.m in Sources */,
 				43BF7A341BC36E3700494119 /* AppDelegate.m in Sources */,
 				43BF7A361BC36E3700494119 /* ESLpod.m in Sources */,
 				43BF79FA1BC36E0600494119 /* main.m in Sources */,
